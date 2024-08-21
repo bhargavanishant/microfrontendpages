@@ -2,11 +2,11 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 
 import './index.css'
-import Product from './Product'
+import Categories from './Categories'
 
 const App = () => (
     <>
-    <Product></Product>
+    <Categories/>
     </>
 )
 const rootElement = document.getElementById('app')

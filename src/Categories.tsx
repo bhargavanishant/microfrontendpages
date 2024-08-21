@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import './index.css';
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-quartz.css';
+import { AgGridReact } from 'ag-grid-react';
 
 export default function Categories() {
-    const [recipesData, setRecipesData] = useState(null);
+    const [recipesData, setRecipesData] = useState([]);
 
     useEffect(() => {
         fetchData();
@@ -11,27 +13,35 @@ export default function Categories() {
     const fetchData = async () => {
         const response = await fetch('https://dummyjson.com/recipes');
         const newData = await response.json();
-        setRecipesData(newData.recipes); // Assuming the API returns an object with a 'recipes' array
+        setRecipesData(newData.recipes || []); // Ensure recipes is an array
     };
 
+    // Column Definitions: Defines the columns to be displayed.
+    const [colDefs, setColDefs] = useState([
+        { field: 'id', headerName: 'ID' },
+        { field: 'name', headerName: 'Name' },
+        { field: 'ingredients', headerName: 'Ingredients' },
+        { field: 'prepTimeMinutes', headerName: 'Prep Time (min)' },
+        { field: 'cookTimeMinutes', headerName: 'Cook Time (min)' },
+        { field: 'servings', headerName: 'Servings' },
+        { field: 'difficulty', headerName: 'Difficulty' },
+        { field: 'cuisine', headerName: 'Cuisine' },
+        { field: 'caloriesPerServing', headerName: 'Calories per Serving' },
+        { field: 'rating', headerName: 'Rating' },
+        { field: 'reviewCount', headerName: 'Review Count' },
+        { field: 'mealType', headerName: 'Meal Type' }
+    ]);
+
     return (
-        <div className="container">
-            {recipesData && recipesData.map(recipe => (
-                <div key={recipe.id} className="card">
-                    <div className="card-header">
-                        <h5 className="no-margin">Recipe Name: {recipe.name}</h5>
-                    </div>
-                    <div className="card-description">
-                        <h5 className="small hint-text no-margin">Cuisine: {recipe.cuisine}</h5>
-                        <h5 className="small hint-text no-margin">Difficulty: {recipe.difficulty}</h5>
-                        <h3 className="m-b-0">Calories: {recipe.caloriesPerServing}</h3>
-                    </div>
-                    <div className="card-footer">
-                        <span className="text-success">Rating: {recipe.rating} ({recipe.reviewCount} reviews)</span>
-                    </div>
-                </div>
-            ))}
+        <div
+            className="ag-theme-quartz" // applying the Data Grid theme
+            style={{ height: 500, width: '100%' }} // the Data Grid will fill the size of the parent container
+        >
+            <AgGridReact
+                rowData={recipesData}
+                columnDefs={colDefs}
+                pagination={true} // Enables pagination if there are many rows
+            />
         </div>
     );
 }
-
