@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './index.css';
+import {useStore} from 'second/ZustandStore';
 
 export default function Product() {
     const [productsData, setProductsData] = useState(null);
-
+    const { count, increaseCount } = useStore();
     useEffect(() => {
         fetchData();
     }, []);
@@ -16,6 +17,7 @@ export default function Product() {
 
     return (
             <div className="container">
+                <h2>{count}</h2>
                 {productsData && productsData.map(product => (
                     <div key={product.id} className="card">
                         <div className="card-header">
