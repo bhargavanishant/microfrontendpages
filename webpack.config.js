@@ -64,7 +64,10 @@ module.exports = (_, argv) => ({
     new ModuleFederationPlugin({
       name: "pages",
       filename: "remoteEntry.js",
-      remotes: {},
+      remotes: {
+        "host": "host@http://localhost:3000/remoteEntry.js",
+        "second": "second@http://localhost:3003/remoteEntry.js",
+      },
       exposes: {
         "./Categories": "./src/Categories.tsx",
         "./Product": './src/Product.tsx',

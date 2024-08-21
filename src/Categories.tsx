@@ -2,20 +2,22 @@ import React, { useEffect, useState } from 'react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
 import { AgGridReact } from 'ag-grid-react';
+import './index.css';
+import CounterComponent from './Counter';
+import {useStore} from 'second/ZustandStore';
 
 export default function Categories() {
-    const [recipesData, setRecipesData] = useState([]);
 
     useEffect(() => {
         fetchData();
-    }, []); // Empty array ensures this runs only once
-
+      }, []); // Empty array ensures this runs only once
+    const { setData, data } = useStore();
     const fetchData = async () => {
         const response = await fetch('https://dummyjson.com/recipes');
         const newData = await response.json();
-        setRecipesData(newData.recipes || []); // Ensure recipes is an array
+        setData(newData.recipes || []);
     };
-
+  
     // Column Definitions: Defines the columns to be displayed.
     const [colDefs, setColDefs] = useState([
         { field: 'id', headerName: 'ID' },
@@ -33,15 +35,19 @@ export default function Categories() {
     ]);
 
     return (
+        <>
+        <CounterComponent></CounterComponent>
         <div
             className="ag-theme-quartz" // applying the Data Grid theme
             style={{ height: 500, width: '100%' }} // the Data Grid will fill the size of the parent container
         >
             <AgGridReact
-                rowData={recipesData}
+                rowData={data}
                 columnDefs={colDefs}
                 pagination={true} // Enables pagination if there are many rows
             />
         </div>
+
+        </>
     );
 }
