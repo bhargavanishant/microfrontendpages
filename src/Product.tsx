@@ -19,7 +19,7 @@ export default function Product() {
     console.log("Product-useEffect-Filters-", { filters });
     let newProductFilterData: any = _.cloneDeep(productsData);
     if (filters?.search) {
-      newProductFilterData = newProductFilterData.filter(
+      newProductFilterData = newProductFilterData?.filter(
         (item: any) =>
           item?.title
             ?.toLowerCase()
@@ -28,7 +28,7 @@ export default function Product() {
       );
     }
     if (filters?.priceRange) {
-      newProductFilterData = newProductFilterData.filter(
+      newProductFilterData = newProductFilterData?.filter(
         (item: any) =>
           item?.price >= filters?.priceRange[0] &&
           item?.price <= filters?.priceRange[1]
