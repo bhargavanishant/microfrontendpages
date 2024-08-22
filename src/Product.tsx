@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./index.css";
-import { useStore } from "second/ZustandStore";
+import { useStore } from "host/ZustandStore";
 import _ from "lodash";
 
 export default function Product() {
