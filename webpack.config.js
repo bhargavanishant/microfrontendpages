@@ -71,7 +71,6 @@ module.exports = (_, argv) => ({
       exposes: {
         "./Categories": "./src/Categories.tsx",
         "./Product": "./src/Product.tsx",
-        "./ProductFilters": "./src/Filters/ProductFilters.tsx",
       },
       shared: {
         ...deps,
